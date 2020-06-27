@@ -1,0 +1,23 @@
+<template>
+    <div>
+        <lightning-tabset>
+            <lightning-tab label='Gallery' title='Gallery' value='gallery'>
+                <div class='slds-scrollable_y'>
+                    <lightning-layout multiple-rows>
+                        <template for:each={boats} for:item='boat'>
+                            <lightning-layout-item class='slds-large-size_3-of-12 slds-medium-size_4-of-12 slds-small-size_6-of-12 slds-p-around_small' key={boat.Id}>
+                                <c-boat-tile boat={boat} selected-boat-id={selectedBoatId} onboatselect={handleBoatSelected}></c-boat-tile>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                </div>
+            </lightning-tab>
+            <lightning-tab label='Boat Editor' title='Boat Editor' value='editor'>
+                <lightning-datatable key-field='Id' columns={columns} data={boats} onsave={updateRecords} hide-checkbox-column></lightning-datatable>
+            </lightning-tab>
+            <lightning-tab label='Boats Near Me' title='Boats Near Me' value='nearMe'>
+                <p>boats near me placeholder</p>
+            </lightning-tab>
+        </lightning-tabset>
+    </div>
+</template>
