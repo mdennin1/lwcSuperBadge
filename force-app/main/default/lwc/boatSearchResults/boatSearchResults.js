@@ -9,7 +9,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 export default class BoatSearchResults extends LightningElement {
     boatTypeId = '';
     boats;
-    columns = [ { label: 'Name', fieldName: 'Name', editable: true },
+    columns = [ 
+                { label: 'Name', fieldName: 'Name', editable: true },
                 { label: 'Length', fieldName: 'Length__c', type: 'number', editable: true },
                 { label: 'Price', fieldName: 'Price__c', type: 'currency', editable: true },
                 { label: 'Description', fieldName: 'Description__c', editable: true },
