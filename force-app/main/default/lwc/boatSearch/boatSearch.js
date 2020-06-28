@@ -37,11 +37,13 @@
 
     // Handles loading event
     handleLoading() { 
+        console.log(`handleLoading() fired`);
         this.isLoading = true;
     }
     
     // Handles done loading event
     handleDoneLoading() { 
+        console.log(`handleDoneLoading() fired`);
         this.isLoading = false;
     }
     
