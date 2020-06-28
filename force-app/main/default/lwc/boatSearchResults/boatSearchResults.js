@@ -26,7 +26,6 @@ export default class BoatSearchResults extends LightningElement {
         this.isLoading = true
         this.notifyLoading(this.isLoading);
         this.boats = result;
-        console.log(`wiredBoats response: ${JSON.stringify(this.boats.data)}`);
         this.boats.data ? this.isLoading = false : this.isLoading = true;
         this.notifyLoading(this.isLoading);
      }
@@ -34,7 +33,7 @@ export default class BoatSearchResults extends LightningElement {
     // public function that updates the existing boatTypeId property
     // uses notifyLoading
     @api searchBoats(boatTypeId) { 
-        console.log(`boatTypeId: ${boatTypeId}`);
+        console.log(`boatTypeId from boatSearch: ${boatTypeId}`);
         this.isLoading = true;
         this.notifyLoading(this.isLoading);
         this.boatTypeId = boatTypeId;
