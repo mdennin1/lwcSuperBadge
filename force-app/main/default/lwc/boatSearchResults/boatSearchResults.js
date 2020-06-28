@@ -73,10 +73,6 @@ export default class BoatSearchResults extends LightningElement {
         const message = { recordId: boatId}
         publish(this.messageContext, BOATMC, message);
     }
-
-    handleBoatSelect(event){
-        this.updateSelectedTile(event);
-    }
     
     // This method must save the changes in the Boat Editor
     // Show a toast message with the title
