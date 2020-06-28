@@ -1,23 +1,30 @@
 <template>
-    <div>
-        <lightning-tabset>
-            <lightning-tab label='Gallery' title='Gallery' value='gallery'>
+    <template if:true={boats.data}>
+        <lightning-tabset variant='scoped'>
+            <lightning-tab label='Gallery' title='Gallery' value='Gallery'>
                 <div class='slds-scrollable_y'>
-                    <lightning-layout multiple-rows>
+                    <lightning-layout class='slds-grid_align-center' multiple-rows>
                         <template for:each={boats.data} for:item='boat'>
-                            <lightning-layout-item class='slds-large-size_3-of-12 slds-medium-size_4-of-12 slds-small-size_6-of-12 slds-p-around_small' key={boat.Id}>
+                            <lightning-layout-item  key={boat.Id} size="12" large-device-size="3" medium-device-size="4" small-device-size="6" padding="around-small">
                                 <c-boat-tile boat={boat} selected-boat-id={selectedBoatId} onboatselect={updateSelectedTile}></c-boat-tile>
                             </lightning-layout-item>
                         </template>
                     </lightning-layout>
                 </div>
             </lightning-tab>
-            <lightning-tab label='Boat Editor' title='Boat Editor' value='editor'>
-                <lightning-datatable key-field='Id' columns={columns} data={boats.data} onsave={updateRecords} hide-checkbox-column></lightning-datatable>
+            <lightning-tab label='Boat Editor' title='Boat Editor' value='Editor'>
+                <div class='slds-scrollable_y'>
+                    <lightning-datatable key-field='Id' 
+                                        columns={columns} 
+                                        data={boats.data} 
+                                        onsave={handleSave} 
+                                        hide-checkbox-column>
+                    </lightning-datatable>
+                </div>
             </lightning-tab>
-            <lightning-tab label='Boats Near Me' title='Boats Near Me' value='nearMe'>
+            <lightning-tab label='Boats Near Me' title='Boats Near Me' value='BoatsNearMe'>
                 <c-boats-near-me boat-type-id={boatTypeId}></c-boats-near-me>
             </lightning-tab>
         </lightning-tabset>
-    </div>
+    </template>
 </template>

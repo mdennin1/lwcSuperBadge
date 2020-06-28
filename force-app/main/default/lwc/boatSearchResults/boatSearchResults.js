@@ -3,99 +3,19 @@ import { updateRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
 import getBoats from '@salesforce/apex/BoatDataService.getBoats';
 import { MessageContext, publish } from 'lightning/messageService';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-/*export default class BoatSearchResults extends LightningElement {
-    //@api boatIds;
-    @api boats;
-    boatIds;
-    error;
-    recordInputs = {};
-    recordUi;
-    selectedBoatId;
-    wiredResponse
-
-    @wire(getRecordUi, { recordIds: '$boatIds', layoutTypes: ['Full'], modes: ['Edit']})
-    getRecordUi(response){
-        this.wiredResponse = response;
-        const data = response.data;
-        const error = response.error;
-        if(data){
-            this.recordUi = data;
-            console.log(`recordUi: ${JSON.stringify(data)}`);
-            let records = [];
-            Object.keys(data.records).forEach(recordId =>{
-                records.push(data.records[recordId]);
-            });
-            console.log(`records: ${JSON.stringify(records)}`);
-            const objectInfo = data.objectInfos.Boat__c;
-            this.recordInputs = records.reduce((recordInputs, record) => {
-                const recordId = record.id;
-                console.assert(recordId);
-                recordInputs[recordId] = generateRecordInputForUpdate(record, objectInfo);
-                return recordInputs;
-            }, {});
-            console.assert(Object.values(this.recordInputs));
-        }
-        if(error){
-            this.error = error;
-        }
-    }
-
-    get boatRecords(){
-        if(this.recordUi){
-            const records = Object.values(this.recordUi.records);
-        }
-        return records;
-    }
-
-    get columns(){
-        return [ { label: 'Name', fieldName: 'Name', editable: true },
-                 { label: 'Length', fieldName: 'Length__c', type: 'number', editable: true },
-                 { label: 'Price', fieldName: 'Price__c', type: 'currency', editable: true },
-                 { label: 'Description', fieldName: 'Description__c', editable: true },
-            ];
-    }
-
-    renderedCallback(){
-        this.boatIds = this.boats.map(boat => boat.Id);
-        console.log(`boatIds: ${this.boatIds}`);
-    }
-
-    handleBoatSelected(event){
-        this.selectedBoatId = event.detail.boatId;
-    }
-
-    updateRecords(event){
-        console.log(`updateRecord() fired`);
-        const draftValues = event.detail.draftValues;
-        console.log(`draftValues: ${JSON.stringify(draftValues)}`);
-        
-        draftValues.forEach(draft =>{
-            const recordId = draft.Id;
-            const recordInput = {...this.recordInputs[recordId]};
-            Object.keys(draft).forEach(key =>{
-                recordInput.fields[key] = draft[key];
-            });
-            updateRecord(recordInput);
-        });
-
-        //return refreshApex(this.wiredResponse);
-        this.dispatchEvent(new CustomEvent('refresh'));
-    }
-
-}*/
-
-// ...
 export default class BoatSearchResults extends LightningElement {
-    selectedBoatId;
+    boatTypeId = '';
+    boats;
     columns = [ { label: 'Name', fieldName: 'Name', editable: true },
                 { label: 'Length', fieldName: 'Length__c', type: 'number', editable: true },
                 { label: 'Price', fieldName: 'Price__c', type: 'currency', editable: true },
                 { label: 'Description', fieldName: 'Description__c', editable: true },
             ];
-    @api boatTypeId = '';
-    boats;
+
     isLoading = false;
+    selectedBoatId;
     
     // wired message context
     @wire(MessageContext)
@@ -107,23 +27,30 @@ export default class BoatSearchResults extends LightningElement {
         this.notifyLoading(this.isLoading);
         this.boats = result;
         console.log(`wiredBoats response: ${JSON.stringify(this.boats.data)}`);
-        this.boats.data ? this.isLoading = true : '';
+        this.boats.data ? this.isLoading = false : this.isLoading = true;
         this.notifyLoading(this.isLoading);
      }
     
     // public function that updates the existing boatTypeId property
     // uses notifyLoading
-    searchBoats(boatTypeId) { 
+    @api searchBoats(boatTypeId) { 
+        console.log(`boatTypeId: ${boatTypeId}`);
+        this.isLoading = true;
         this.notifyLoading(this.isLoading);
-        this.refresh();
+        this.boatTypeId = boatTypeId;
+        this.isLoading = false;
+        this.notifyLoading(this.isLoading);
     }
     
     // this public function must refresh the boats asynchronously
     // uses notifyLoading
-    refresh() {this.isLoading = true;
+    @api
+    async refresh() {
+        console.log(`refresh() fired`);
+        this.isLoading = true;
         this.notifyLoading(this.isLoading);
-        refreshApex(this.boats);
-        this.boats.data ? this.isLoading = true : this.isLoading = false;
+        await refreshApex(this.boats);
+        this.isLoading = false;
         this.notifyLoading(this.isLoading);
      }
     
@@ -145,18 +72,30 @@ export default class BoatSearchResults extends LightningElement {
     // This method must save the changes in the Boat Editor
     // Show a toast message with the title
     // clear lightning-datatable draft values
-    handleSave() {
+    handleSave(event) {
       const recordInputs = event.detail.draftValues.slice().map(draft => {
           const fields = {...draft}; //Object.assign({}, draft);
           return { fields };
       });
       const promises = recordInputs.map(recordInput => {
               //update boat record
+              updateRecord(recordInput);
       });
       Promise.all(promises)
-          .then(() => {})
+          .then(() => {
+              this.dispatchEvent(new ShowToastEvent({
+                  title: 'Success',
+                  message: 'Ship It!',
+                  variant: 'success'
+              }));
+          })
           .catch(error => {
               console.error(error.body.message);
+              this.dispatchEvent(new ShowToastEvent({
+                  title: 'Error',
+                  message: error.body.message,
+                  variant: 'error',
+              }))
           })
           .finally(() => {
               this.refresh();
@@ -165,7 +104,7 @@ export default class BoatSearchResults extends LightningElement {
 
     // Check the current value of isLoading before dispatching the doneloading or loading custom event
     notifyLoading(isLoading) {
-        isLoading ? this.dispatchEvent(new CustomEvent('doneloading')) : this.dispatchEvent(new CustomEvent('loading'));
+        isLoading ? this.dispatchEvent(new CustomEvent('loading')) : this.dispatchEvent(new CustomEvent('doneloading'));
      }
   }
   
