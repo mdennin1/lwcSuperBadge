@@ -10,16 +10,25 @@ export default class BoatAddReviewForm extends LightningElement {
     get recordId() { }
     set recordId(value) {
       //sets boatId attribute
+      this.setAttribute('boatId', value);
       //sets boatId assignment
+      this.boatId = value;
     }
     
     // Gets user rating input from stars component
-    handleRatingChanged(event) { }
+    handleRatingChanged(event) { 
+        console.log(`rating event: ${JSON.stringify(event.detail)}`);
+        this.rating = event.detail;
+    }
     
     // Custom submission handler to properly set Rating
     // This function must prevent the anchor element from navigating to a URL.
     // form to be submitted: lightning-record-edit-form
-    handleSubmit(event) { }
+    handleSubmit(event) {
+        let record = event.detail;
+        //add record.Rating__c = this.rating;
+        //add record.Boat__c = this.boatId;
+     }
     
     // Shows a toast message once form is submitted successfully
     // Dispatches event when a review is created
