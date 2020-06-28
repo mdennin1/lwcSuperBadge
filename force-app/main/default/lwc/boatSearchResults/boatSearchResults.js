@@ -3,6 +3,7 @@ import { updateRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
 import getBoats from '@salesforce/apex/BoatDataService.getBoats';
 import { MessageContext, publish } from 'lightning/messageService';
+import BOATMC from '@salesforce/messageChannel/BoatMessageChannel__c';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class BoatSearchResults extends LightningElement {
@@ -32,8 +33,8 @@ export default class BoatSearchResults extends LightningElement {
     
     // public function that updates the existing boatTypeId property
     // uses notifyLoading
-    @api searchBoats(boatTypeId) { 
-        console.log(`boatTypeId from boatSearch: ${boatTypeId}`);
+    @api 
+    searchBoats(boatTypeId) { 
         this.isLoading = true;
         this.notifyLoading(this.isLoading);
         this.boatTypeId = boatTypeId;
@@ -54,19 +55,27 @@ export default class BoatSearchResults extends LightningElement {
      }
     
     // this function must update selectedBoatId and call sendMessageService
-    updateSelectedTile(event) { 
+    /*updateSelectedTile(boatId) { 
         console.log(`updateSelectedTile() fired`);
-        this.selectedBoatId = event.detail.boatId;
+        this.selectedBoatId = boatId;
         console.log(`selectedBoatId: ${this.selectedBoatId}`);
         this.sendMessageService(this.selectedBoatId);
+    }*/
+    updateSelectedTile(event){
+        const boatId = event.detail.boatId;
+        this.selectedBoatId = boatId;
+        this.sendMessageService(boatId);
     }
     
     // Publishes the selected boat Id on the BoatMC.
     sendMessageService(boatId) {
         const message = { recordId: boatId}
-        console.log(`message to be sent via LMS: ${JSON.stringify(message)}`);
         publish(this.messageContext, BOATMC, message);
-     }
+    }
+
+    handleBoatSelect(event){
+        this.updateSelectedTile(event);
+    }
     
     // This method must save the changes in the Boat Editor
     // Show a toast message with the title

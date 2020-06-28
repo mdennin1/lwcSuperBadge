@@ -8,13 +8,11 @@
 
     // Handles loading event
     handleLoading() { 
-        console.log(`handleLoading() fired`);
         this.isLoading = true;
     }
     
     // Handles done loading event
     handleDoneLoading() { 
-        console.log(`handleDoneLoading() fired`);
         this.isLoading = false;
     }
     
@@ -22,7 +20,6 @@
     // This custom event comes from the form
     searchBoats(event) {
         this.boatTypeId = event.detail.boatTypeId;
-        console.log(`boatTypeId from search form: ${this.boatTypeId}`);
         const searchResultsCmp = this.template.querySelector('c-boat-search-results');
         searchResultsCmp ? searchResultsCmp.searchBoats(this.boatTypeId) : '';
     }

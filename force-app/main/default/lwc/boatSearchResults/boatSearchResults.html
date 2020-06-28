@@ -6,7 +6,7 @@
                     <lightning-layout class='slds-grid_align-center' multiple-rows>
                         <template for:each={boats.data} for:item='boat'>
                             <lightning-layout-item  key={boat.Id} size="12" large-device-size="3" medium-device-size="4" small-device-size="6" padding="around-small">
-                                <c-boat-tile boat={boat} selected-boat-id={selectedBoatId} onboatselect={updateSelectedTile}></c-boat-tile>
+                                <c-boat-tile boat={boat} selected-boat-id={selectedBoatId} onboatselect={handleBoatSelect}></c-boat-tile>
                             </lightning-layout-item>
                         </template>
                     </lightning-layout>
