@@ -1,8 +1,34 @@
 <template>
     <template if:false={wiredRecord.data}>
       <!-- lightning card for the label when wiredRecord has no data goes here  -->
+      <lightning-card class='slds-align_absolute-center'>
+          <span class='no-boat-height'>{labelPleaseSelectABoat}</span>
+      </lightning-card>
     </template>
     <template if:true={wiredRecord.data}>
        <!-- lightning card for the content when wiredRecord has data goes here  -->
+        <lightning-card title={boatName} icon-name={detailsTabIconName}>
+            <div slot='actions'>
+              <lightning-button label={labelFullDetails} onclick={navigateToRecordViewPage}></lightning-button>
+            </div>
+            <lightning-tabset active-tab-value={activeTabValue} variant='scoped'>
+                <lightning-tab label='Details' title='Details' name={labelDetails}>
+                  <lightning-record-view-form record-id={boatId}
+                                              object-api-name='Boat__c'
+                                              density='compact'>
+                      <lightning-output-field field-name={typeField}></lightning-output-field>
+                      <lightning-output-field field-name={lengthField}></lightning-output-field>
+                      <lightning-output-field field-name={priceField}></lightning-output-field>
+                      <lightning-output-field field-name={descriptionField}></lightning-output-field>
+                  </lightning-record-view-form>
+                </lightning-tab>
+                <lightning-tab label={labelReviews} title={labelReviews} name={labelReview}>
+                  <c-boat-reviews record-id={boatId}></c-boat-reviews>
+                </lightning-tab>
+                <lightning-tab label={labelAddReview} title='Add Review' name={labelAddReview}>
+                  <c-boat-add-review-form record-id={boatId}></c-boat-add-review-form>
+                </lightning-tab>
+            </lightning-tabset>
+        </lightning-card>
     </template>
 </template>
