@@ -54,8 +54,7 @@ export default class BoatAddReviewForm extends LightningElement {
 
 
     handleRatingChanged(event) { 
-        console.log(`rating event: ${JSON.stringify(event.detail)}`);
-        this.rating = event.detail;
+        this.rating = event.detail.rating;
     }
     
     handleCommentChange(event){
