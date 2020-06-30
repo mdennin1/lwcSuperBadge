@@ -1,7 +1,6 @@
 import { api, LightningElement, wire } from 'lwc';
 import BOATREVIEW_OBJECT from '@salesforce/schema/BoatReview__c';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import { createRecord, generateRecordInputForCreate, getRecordCreateDefaults } from 'lightning/uiRecordApi';
 
 const TOAST_TITLE = 'Review Created!';
 const TOAST_SUCCESS_VARIANT = 'success';
@@ -26,26 +25,6 @@ export default class BoatAddReviewForm extends LightningElement {
         console.log(`BOATREVIEW_OBJECT.objectApiName: ${BOATREVIEW_OBJECT.objectApiName}`);
         return BOATREVIEW_OBJECT.objectApiName;
     }
-
-    @wire(getRecordCreateDefaults, { objectApiName: BOATREVIEW_OBJECT })
-    //recordCreateDefaults;
-    getRecordInput({ data, error }){
-      if(data){
-        const objectInfo = data.objectInfos[BOATREVIEW_OBJECT.objectApiname];
-        const recordDefaults = data.record;
-        console.log(`recordDefaults: ${JSON.stringify(recordDefaults)}`);
-        const recordInput = generateRecordInputForCreate(recordDefaults, objectInfo);
-        console.log(`recordInput: ${JSON.stringify(recordInput)}`);
-        //this.recordInput = {...recordInput};
-      }
-      if(error){
-        this.dispatchEvent(new ShowToastEvent({
-          title: 'Error',
-          message: error.body.message,
-          variant: 'error'
-        }));
-      }
-    }
     
     // Gets user rating input from stars component
     handleSubjectChange(event){
@@ -65,31 +44,33 @@ export default class BoatAddReviewForm extends LightningElement {
     // This function must prevent the anchor element from navigating to a URL.
     // form to be submitted: lightning-record-edit-form
     handleSubmit(event) {
-        event.preventDefault();
+        //event.preventDefault();
         const fields = event.detail.fields;
         fields.Rating__c = this.rating;
         fields.Boat__c = this.boatId;
         console.log(`fields: ${JSON.stringify(fields)}`);
-        this.template.querySelector('lightning-record-edit-form').submit(fields);
+        return this.template.querySelector('lightning-record-edit-form').submit(fields);
      }
     
     // Shows a toast message once form is submitted successfully
     // Dispatches event when a review is created
     handleSuccess(event) {
+      console.log(`${JSON.stringify(event.detail)}`)
       console.log(`handleSuccess() fired`);
-      console.log(`event detail: ${JSON.stringify(event.detail)}`);
       // TODO: dispatch the custom event and show the success message
       this.dispatchEvent(new CustomEvent('createreview'));  
       this.dispatchEvent(new ShowToastEvent({
           title: TOAST_TITLE,
           variant: TOAST_SUCCESS_VARIANT
       }));
-      this.handleReset();
+      this.handleReset(event);
     }
     
     // Clears form data upon submission
     // TODO: it must reset each lightning-input-field
     handleReset(event) {
+      console.log(`handleReset() fired: ${JSON.stringify(event.detail)}`);
+      this.rating = 0;
       const inputFields = this.template.querySelectorAll(
           'lightning-input-field'
       );

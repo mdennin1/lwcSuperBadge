@@ -1,7 +1,7 @@
 <template>
     <!-- lightning data service code -->
     <!-- <lightning-record-edit-form> -->
-    <lightning-record-edit-form object-api-name='BoatReview__c' onsubmit={handleSubmit}>
+    <lightning-record-edit-form object-api-name='BoatReview__c' onsubmit={handleSubmit} onsuccess={handleSuccess}>
       <lightning-layout multiple-rows vertical-align="start">
         <lightning-layout-item size="8" padding="horizontal-small">
           <div class="slds-form-element">
