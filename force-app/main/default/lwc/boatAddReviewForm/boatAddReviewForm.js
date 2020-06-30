@@ -65,26 +65,19 @@ export default class BoatAddReviewForm extends LightningElement {
     // This function must prevent the anchor element from navigating to a URL.
     // form to be submitted: lightning-record-edit-form
     handleSubmit(event) {
-        console.log(`submit event: ${JSON.stringify(event.detail)}`);
-        console.log(`submit button clicked`);
-        this.recordInput.fields.Boat__c = this.boatId;
-        this.recordInput.fields.Rating__c = this.rating;
-        console.log(`record to be created: ${JSON.stringify(this.recordInput)}`);
-
-        createRecord(this.recordInput)
-        .then(data =>{
-          console.log(`record created: ${JSON.stringify(data)}`);
-          this.handleSuccess();
-        })
-        .catch(error =>{
-          console.error(error.body.message);
-        });
+        event.preventDefault();
+        const fields = event.detail.fields;
+        fields.Rating__c = this.rating;
+        fields.Boat__c = this.boatId;
+        console.log(`fields: ${JSON.stringify(fields)}`);
+        this.template.querySelector('lightning-record-edit-form').submit(fields);
      }
     
     // Shows a toast message once form is submitted successfully
     // Dispatches event when a review is created
-    handleSuccess() {
-      console.log(`handleSuccess() fired`)
+    handleSuccess(event) {
+      console.log(`handleSuccess() fired`);
+      console.log(`event detail: ${JSON.stringify(event.detail)}`);
       // TODO: dispatch the custom event and show the success message
       this.dispatchEvent(new CustomEvent('createreview'));  
       this.dispatchEvent(new ShowToastEvent({
@@ -96,9 +89,15 @@ export default class BoatAddReviewForm extends LightningElement {
     
     // Clears form data upon submission
     // TODO: it must reset each lightning-input-field
-    handleReset() { 
-      this.rating = null;
-      this.boatId = null;
-      this.recordInput = { apiname: 'BoatReview__c', fields:{}};
-    }
-  }
+    handleReset(event) {
+      const inputFields = this.template.querySelectorAll(
+          'lightning-input-field'
+      );
+      if (inputFields) {
+          inputFields.forEach(field => {
+              field.reset();
+          });
+      }
+   }
+}
+   

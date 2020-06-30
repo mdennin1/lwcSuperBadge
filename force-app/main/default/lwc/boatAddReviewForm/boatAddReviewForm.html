@@ -1,7 +1,7 @@
 <template>
     <!-- lightning data service code -->
     <!-- <lightning-record-edit-form> -->
-    <lightning-record-edit-form object-api-name='BoatReview__c'>
+    <lightning-record-edit-form object-api-name='BoatReview__c' onsubmit={handleSubmit}>
       <lightning-layout multiple-rows vertical-align="start">
         <lightning-layout-item size="8" padding="horizontal-small">
           <div class="slds-form-element">
@@ -33,7 +33,7 @@
       </lightning-layout>
       <div class="slds-align_absolute-center" style="margin-top: 5px">
              <!-- add submit button -->
-             <lightning-button label='Submit' type='submit' onclick={handleSubmit} icon-name='utility:save'></lightning-button>
+             <lightning-button label='Submit' type='submit' name='save' icon-name='utility:save'></lightning-button>
       </div>
     </lightning-record-edit-form>
     <!-- </lightning-record-edit-form> -->
