@@ -13,7 +13,7 @@ export default class BoatReviews extends NavigationMixin(LightningElement) {
     @api
     get recordId() {
         return this.boatId;
-     }
+    }
     set recordId(value) {
       //sets boatId attribute
       this.setAttribute('boatId', value);
