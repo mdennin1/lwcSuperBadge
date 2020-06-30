@@ -1,7 +1,8 @@
 import { api, LightningElement, wire } from 'lwc';
 import getAllReviews from '@salesforce/apex/BoatDataService.getAllReviews';
+import { NavigationMixin } from 'lightning/navigation';
 
-export default class BoatReviews extends LightningElement {
+export default class BoatReviews extends NavigationMixin(LightningElement) {
     // Private
     boatId;
     error;
