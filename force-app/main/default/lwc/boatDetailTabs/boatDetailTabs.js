@@ -120,7 +120,7 @@ export default class BoatDetailTabs extends NavigationMixin(LightningElement) {
   // Navigates back to the review list, and refreshes reviews component
   handleReviewCreated() { 
       console.log('handleReviewCreated() fired. event received from boatAddReviewForm');
-      this.template.querySelector('lightning-tabset').setAttribute('activeTabValue', 'Reviews');
+      //this.template.querySelector('lightning-tabset').setAttribute('activeTabValue', 'Reviews');
       this.template.querySelector('lightning-tabset').activeTabValue = 'Reviews'; 
 
       //refresh reviews data

@@ -1,7 +1,4 @@
 <template>
-  <template if:true={isLoading}>
-    <lightning-spinner alternative-text='Loading' size='small' variant='brand'></lightning-spinner>
-  </template>
   <!-- div for when there are no reviews available -->
   <template if:false={reviewsToShow}>
         <div class='slds-align_absolute-center'>
@@ -10,9 +7,12 @@
   </template>
   <template if:true={reviewsToShow}>
   <!-- div for when there are reviews available -->
-    <div>
+    <div class='slds-feed reviews-style slds-is-relative slds-scrollable_y'>
     <!-- insert spinner -->
-      <ul class="slds-feed__list reviews-style slds-is-relative slds-scrollable_y">
+      <template if:true={isLoading}>
+        <lightning-spinner alternative-text='Loading' size='small' variant='brand'></lightning-spinner>
+      </template>
+      <ul class="slds-feed__list">
         <!-- start iteration -->
         <template for:each={boatReviews} for:item='boatReview'>
           <li class="slds-feed__item" key={boatReview.Id}>
