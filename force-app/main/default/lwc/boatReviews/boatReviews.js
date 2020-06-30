@@ -1,4 +1,4 @@
-import { api, LightningElement, wire } from 'lwc';
+import { api, LightningElement } from 'lwc';
 import getAllReviews from '@salesforce/apex/BoatDataService.getAllReviews';
 import { NavigationMixin } from 'lightning/navigation';
 
@@ -57,8 +57,6 @@ export default class BoatReviews extends NavigationMixin(LightningElement) {
                 this.isLoading = false;
             });
     }
-    
-
 
     // Helper method to use NavigationMixin to navigate to a given record on click
     navigateToRecord(event) { 
