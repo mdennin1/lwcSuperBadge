@@ -30,6 +30,7 @@ export default class BoatReviews extends LightningElement {
     // Public method to force a refresh of the reviews invoking getReviews
     @api
     refresh() {
+        console.log(`refresh() fired`);
         this.getReviews();
      }
     
@@ -56,14 +57,18 @@ export default class BoatReviews extends LightningElement {
             });
     }
     
+
+
     // Helper method to use NavigationMixin to navigate to a given record on click
     navigateToRecord(event) { 
-        const userId =event.target.getAttribute('data-record-id');
-        console.log(`userId from link: ${userId}`);
+        console.log(`navigateToRecord() fired`);
+        const recordId = event.target.getAttribute('data-record-id');
+        console.log(`recordId: ${recordId}`);
+        
         this[NavigationMixin.Navigate]({
             type: 'standard__recordPage',
             attributes: {
-                recordId: userId,
+                recordId: recordId,
                 objectApiName: 'User',
                 actionName: 'view'
             },
