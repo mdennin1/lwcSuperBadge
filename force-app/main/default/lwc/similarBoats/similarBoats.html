@@ -8,7 +8,7 @@
           <!-- Loop through the list of similar boats -->
           <template for:each={relatedBoats} for:item='boat'>
             <!-- Responsive lightning-layout-item -->
-            <lightning-layout-item key={boat.Id}>
+            <lightning-layout-item key={boat.Id} size="12" large-device-size="4" medium-device-size="4" small-device-size="6" padding="around-small">
               <!-- Each boat tile goes here -->
               <c-boat-tile boat={boat} onboatselect={openBoatDetailPage}></c-boat-tile>
             </lightning-layout-item>
