@@ -12,7 +12,7 @@ public class BoatDataService{
     @AuraEnabled(cacheable=true)
     public static list<Boat__c> getSimilarBoats(Id boatId, String similarBy){
         system.debug('params: '+boatId+', '+similarBy);
-        String query = 'SELECT Id, Name, BoatType__c, Boat_Image__c, Contact__c, Description__c, Geolocation__Latitude__s, Geolocation__Longitude__s, length__c, picture__c, price__c, year_built__c FROM Boat__c WHERE ';
+        String query = 'SELECT Id, Name, BoatType__c, Boat_Image__c, Contact__c, Description__c, Geolocation__Latitude__s, Geolocation__Longitude__s, length__c, picture__c, price__c, year_built__c, Contact__r.Name, BoatType__r.Name FROM Boat__c WHERE ';
         Boat__c boat = [SELECT Id, Name, BoatType__c, Boat_Image__c, Contact__c, Description__c, Geolocation__Latitude__s, Geolocation__Longitude__s, length__c, picture__c, price__c, year_built__c FROM Boat__c WHERE Id =: boatId LIMIT 1];
         String condition = '';
         if(similarBy == 'Type'){
@@ -32,8 +32,6 @@ public class BoatDataService{
         List<Boat__c> similarBoats = Database.query(query);
         system.debug('similiarBoats: '+similarBoats);
         return similarBoats;
-        //return Database.query(query);
-        //return [SELECT Id, Name, BoatType__c, Boat_Image__c, Contact__c, Description__c, Geolocation__Latitude__s, Geolocation__Longitude__s, length__c, picture__c, price__c, year_built__c FROM Boat__c];
     }
 
     @AuraEnabled(cacheable=true)

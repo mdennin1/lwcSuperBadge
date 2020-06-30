@@ -4,13 +4,15 @@
         <template if:true={noBoats}>
           <p class="slds-align_absolute-center">There are no related boats by {similarBy}!</p>
         </template>
-        <!-- Loop through the list of similar boats -->
-        <template for:each={relatedBoats} for:item='boat'>
-          <!-- Responsive lightning-layout-item -->
-          <lightning-layout-item key={boat.Id}>
-            <!-- Each boat tile goes here -->
-            <c-boat-tile boat={boat} onboatselect={openBoatDetailPage}></c-boat-tile>
-          </lightning-layout-item>
+        <template if:false={noBoats}>
+          <!-- Loop through the list of similar boats -->
+          <template for:each={relatedBoats} for:item='boat'>
+            <!-- Responsive lightning-layout-item -->
+            <lightning-layout-item key={boat.Id}>
+              <!-- Each boat tile goes here -->
+              <c-boat-tile boat={boat} onboatselect={openBoatDetailPage}></c-boat-tile>
+            </lightning-layout-item>
+          </template>
         </template>
       </lightning-layout>
     </lightning-card>

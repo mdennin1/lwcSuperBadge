@@ -32,6 +32,7 @@ export default class SimilarBoats extends NavigationMixin(LightningElement) {
     similarBoats({ error, data }) {
         if(data){
             this.relatedBoats = data;
+            console.log(`relatedBoats: ${JSON.stringify(this.relatedBoats)}`);
         }
         if(error){
             this.error = error;
@@ -49,11 +50,10 @@ export default class SimilarBoats extends NavigationMixin(LightningElement) {
     
     // Navigate to record page
     openBoatDetailPage(event) { 
-        const boatId = event.detail.boatId;
         this[NavigationMixin.Navigate]({
             type: 'standard__recordPage',
             attributes: {
-                recordId: boatId,
+                recordId: event.detail.boatId,
                 actionName: 'view'
             }
         });
