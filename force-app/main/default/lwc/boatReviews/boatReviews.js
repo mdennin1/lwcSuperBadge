@@ -58,11 +58,14 @@ export default class BoatReviews extends LightningElement {
     
     // Helper method to use NavigationMixin to navigate to a given record on click
     navigateToRecord(event) { 
+        const userId =event.target.getAttribute('data-record-id');
+        console.log(`userId from link: ${userId}`);
         this[NavigationMixin.Navigate]({
-            type: 'standard__RecordPage',
+            type: 'standard__recordPage',
             attributes: {
-                apiName: BoatReview__c,
-                recordId: this.boatId
+                recordId: userId,
+                objectApiName: 'User',
+                actionName: 'view'
             },
         });
      }

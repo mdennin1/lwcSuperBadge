@@ -21,7 +21,7 @@ public class BoatDataService{
 
     @AuraEnabled
     public static list<BoatReview__c> getAllReviews(String boatId){
-        return [SELECT Id, Boat__c, Name, Comment__c, Rating__c, createdDate, createdBy.Name, createdBy.SmallPhotoUrl  FROM BoatReview__c WHERE Boat__c =: boatId ORDER BY createdDate desc];
+        return [SELECT Id, Boat__c, Name, Comment__c, Rating__c, createdDate, CreatedBy.Name, CreatedBy.SmallPhotoUrl, CreatedBy.CompanyName  FROM BoatReview__c WHERE Boat__c =: boatId ORDER BY createdDate desc];
     }
 
     @AuraEnabled(cacheable=true)
