@@ -84,8 +84,9 @@ export default class BoatAddReviewForm extends LightningElement {
     // Shows a toast message once form is submitted successfully
     // Dispatches event when a review is created
     handleSuccess() {
+      console.log(`handleSuccess() fired`)
       // TODO: dispatch the custom event and show the success message
-      this.dispatchEvent(new CustomEvent('reviewcreate'));  
+      this.dispatchEvent(new CustomEvent('createreview'));  
       this.dispatchEvent(new ShowToastEvent({
           title: TOAST_TITLE,
           variant: TOAST_SUCCESS_VARIANT
@@ -98,5 +99,6 @@ export default class BoatAddReviewForm extends LightningElement {
     handleReset() { 
       this.rating = null;
       this.boatId = null;
+      this.recordInput = { apiname: 'BoatReview__c', fields:{}};
     }
   }

@@ -45,6 +45,7 @@ export default class BoatReviews extends LightningElement {
         getAllReviews({ boatId: this.boatId })
             .then(data=>{
                 this.boatReviews = data;
+                console.log(`boatReviews: ${JSON.stringify(this.boatReviews)}`);
             })
             .catch(error=>{
                 this.error = error;

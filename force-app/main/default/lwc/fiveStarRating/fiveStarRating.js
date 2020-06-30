@@ -13,7 +13,7 @@ const TOAST_ERROR_TITLE = 'Error loading five-star';
 
 export default class FiveStarRating extends LightningElement {
   //initialize public readOnly and value properties
-  @api readOnly = false;
+  @api readOnly;
   @api value;
 
   editedValue;
@@ -38,13 +38,10 @@ export default class FiveStarRating extends LightningElement {
   //display a toast with error message if there is an error loading script
   loadScript() {
       Promise.all([
-          //loadStyle(this, fivestar +'/rating.css'),
-          //loadScript(this, fivestar+'/rating.js')
           loadStyle(this, `${fivestar}/rating.css`),
           loadScript(this, `${fivestar}/rating.js`)
       ]).then(()=>{
           //do stuff
-          console.log(`.css and .js files loaded baby`);
           this.initializeRating();
       }).catch(error=>{
           console.error(error.body.message);
