@@ -21,11 +21,11 @@ public class BoatDataService{
         }
         if(similarBy == 'Price'){
             Decimal price = boat.Price__c;
-            condition += 'Price__c <= : price';
+            condition += 'Price__c <= : price LIMIT 9';
         }
         if(similarBy == 'Length'){
             Decimal length = boat.Length__c;
-            condition += 'Length__c <= : length';
+            condition += 'Length__c <= : length LIMIT 9';
         }
         query += condition;
         system.debug('query: '+query);

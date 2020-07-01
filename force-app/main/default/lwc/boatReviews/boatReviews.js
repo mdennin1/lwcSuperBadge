@@ -26,13 +26,13 @@ export default class BoatReviews extends NavigationMixin(LightningElement) {
     // Getter to determine if there are reviews to display
     get reviewsToShow() {
         return this.boatReviews ? this.boatReviews.length > 0 : false;
-     }
+    }
     
     // Public method to force a refresh of the reviews invoking getReviews
     @api
     refresh() {
         this.getReviews();
-     }
+    }
     
     // Imperative Apex call to get reviews for given boat
     // returns immediately if boatId is empty or null
@@ -65,5 +65,5 @@ export default class BoatReviews extends NavigationMixin(LightningElement) {
                 actionName: 'view'
             },
         });
-     }
-  }
+    }
+}
