@@ -31,7 +31,6 @@ export default class BoatReviews extends NavigationMixin(LightningElement) {
     // Public method to force a refresh of the reviews invoking getReviews
     @api
     refresh() {
-        console.log(`refresh() fired`);
         this.getReviews();
      }
     
@@ -47,7 +46,6 @@ export default class BoatReviews extends NavigationMixin(LightningElement) {
         getAllReviews({ boatId: this.boatId })
             .then(data=>{
                 this.boatReviews = data;
-                console.log(`boatReviews: ${JSON.stringify(this.boatReviews)}`);
             })
             .catch(error=>{
                 this.error = error;
