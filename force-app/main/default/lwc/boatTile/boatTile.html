@@ -6,23 +6,24 @@
         <div class="lower-third">
             <!-- Boat information goes here -->
             <h1 class='slds-truncate slds-text-heading_medium'>
-                {boat.Name}
+                Name:&nbsp;{boat.Name}
             </h1>
             <h2 class='slds-truncate slds-text-heading_small'>
-                {boat.Contact__r.Name}
+                Owner:&nbsp;{boat.Contact__r.Name}
             </h2>
             <div class='slds-text-body_small'>
                 <lightning-formatted-number 
+                    label='Price'
                     value={boat.Price__c} 
                     format-style='currency'
                     maximum-fraction-digits='2'>
                 </lightning-formatted-number>
             </div>
             <div class='slds-text-body_small'>
-                {boat.Length__c}
+                Length:&nbsp;{boat.Length__c}
             </div>
             <div class='slds-text-body_small'>
-                {boat.BoatType__r.Name}
+                Type:&nbsp;{boat.BoatType__r.Name}
             </div>
         </div>
     </div>
