@@ -104,6 +104,10 @@ export default class BoatDetailTabs extends NavigationMixin(LightningElement) {
   connectedCallback() { 
       this.subscribeMC();
   }
+
+  renderedCallback(){
+    console.log(`labels: ${JSON.stringify(this.label)}`);
+  }
   
   // Navigates to record page
   navigateToRecordViewPage() {
@@ -111,11 +115,10 @@ export default class BoatDetailTabs extends NavigationMixin(LightningElement) {
       type: 'standard__recordPage',
       attributes: {
           recordId: this.boatId,
-          objectApiName: this.objectApiName,
           actionName: 'view',
-      },
-  })
-   }
+        },
+    });
+  }
   
   // Navigates back to the review list, and refreshes reviews component
   handleReviewCreated() { 

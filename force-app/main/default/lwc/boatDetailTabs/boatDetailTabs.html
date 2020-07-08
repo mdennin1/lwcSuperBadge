@@ -2,17 +2,19 @@
     <template if:false={wiredRecord.data}>
       <!-- lightning card for the label when wiredRecord has no data goes here  -->
       <lightning-card class='slds-align_absolute-center'>
-          <span class='no-boat-height'>{labelPleaseSelectABoat}Please select a boat</span>
+        <div class='slds-align_absolute-center'>
+          <span class='no-boat-height'>{label.labelPleaseSelectABoat}</span>
+        </div>
       </lightning-card>
     </template>
     <template if:true={wiredRecord.data}>
        <!-- lightning card for the content when wiredRecord has data goes here  -->
         <lightning-card title={boatName} icon-name={detailsTabIconName}>
           <div slot="actions">
-            <lightning-button label='Full Details' onclick={navigateToRecordViewPage}></lightning-button>
+            <lightning-button label={label.labelFullDetails} onclick={navigateToRecordViewPage}></lightning-button>
           </div>
             <lightning-tabset variant='scoped'>
-                <lightning-tab label='Details' title='Details' value='Details'>
+                <lightning-tab label={label.labelDetails} title={label.labelDetails} value={label.labelDetails}>
                   <lightning-record-view-form record-id={boatId}
                                               object-api-name='Boat__c'
                                               density='compact'>
@@ -22,10 +24,10 @@
                       <lightning-output-field field-name={descriptionField}></lightning-output-field>
                   </lightning-record-view-form>
                 </lightning-tab>
-                <lightning-tab label='Reviews' title='Reviews' value='Reviews'>
+                <lightning-tab label={label.labelReviews} title={label.labelReviews} value={label.labelReviews}>
                   <c-boat-reviews record-id={boatId}></c-boat-reviews>
                 </lightning-tab>
-                <lightning-tab label='Add Review' title='Add Review' value='Add Review'>
+                <lightning-tab label={label.labelAddReview} title={label.labelAddReview} value={label.labelAddReview}>
                   <c-boat-add-review-form record-id={boatId} oncreatereview={handleReviewCreated}></c-boat-add-review-form>
                 </lightning-tab>
             </lightning-tabset>
