@@ -13,10 +13,10 @@
             <!-- lightning card for the content when wiredRecord has data goes here  -->
             <lightning-card title={boatName} icon-name={detailsTabIconName}>
               <div slot="actions">
-                <lightning-button label={label.labelFullDetails} onclick={navigateToRecordViewPage}></lightning-button>
+                <lightning-button label={label.labelFullDetails} name={label.labelFullDetails} onclick={navigateToRecordViewPage}></lightning-button>
               </div>
               <lightning-record-view-form record-id={boatId}
-                                          object-api-name='Boat__c'
+                                          object-api-name={boatObjectApiName}
                                           density='compact'>
                   <lightning-output-field field-name={typeField}></lightning-output-field>
                   <lightning-output-field field-name={lengthField}></lightning-output-field>

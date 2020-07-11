@@ -1,4 +1,4 @@
-import { api, LightningElement, wire } from 'lwc';
+import { LightningElement, wire } from 'lwc';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import BOATMC from '@salesforce/messageChannel/BoatMessageChannel__c';
 import { subscribe, MessageContext, APPLICATION_SCOPE } from 'lightning/messageService';
@@ -16,11 +16,6 @@ import labelAddReview from '@salesforce/label/c.Add_Review';
 import labelFullDetails from '@salesforce/label/c.Full_Details';
 // import labelPleaseSelectABoat for Please_select_a_boat
 import labelPleaseSelectABoat from '@salesforce/label/c.Please_select_a_boat';
-
-//
-import labelTest from '@salesforce/label/c.test';
-//
-
 
 // Boat__c Schema Imports
 import BOAT_OBJECT from '@salesforce/schema/Boat__c';
@@ -71,8 +66,8 @@ export default class BoatDetailTabs extends NavigationMixin(LightningElement) {
     return DESCRIPTION_FIELD.fieldApiName;
   }
 
-  get objectApiName(){
-    return 'Boat__c'; //BOAT_OBJECT.objectApiName;
+  get boatObjectApiName(){
+    return BOAT_OBJECT.objectApiName;
   }
 
   
