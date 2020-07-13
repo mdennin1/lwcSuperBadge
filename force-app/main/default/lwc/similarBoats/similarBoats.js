@@ -32,7 +32,6 @@ export default class SimilarBoats extends NavigationMixin(LightningElement) {
     similarBoats({ error, data }) {
         if(data){
             this.relatedBoats = data;
-            console.log(`relatedBoats: ${JSON.stringify(this.relatedBoats)}`);
         }
         if(error){
             this.error = error;

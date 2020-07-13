@@ -7,7 +7,11 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
-            <property label="Enter the property you want to compare by" name="similarBy" datasource="Type,Price,Length" type="String"/>
+            <property label="Enter the property you want to compare by" name="similarBy" datasource="Type, Price, Length" type='String'/>
+            <objects>
+                <object>Boat__c</object>
+            </objects>
         </targetConfig>
     </targetConfigs>
+    <masterLabel>similarBoats</masterLabel>
 </LightningComponentBundle>
