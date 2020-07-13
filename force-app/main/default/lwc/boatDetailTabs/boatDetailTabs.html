@@ -12,11 +12,9 @@
           <lightning-tab label={label.labelDetails} title={label.labelDetails} value={label.labelDetails}>
             <!-- lightning card for the content when wiredRecord has data goes here  -->
             <lightning-card title={boatName} icon-name={detailsTabIconName}>
-              <div slot="actions">
-                <lightning-button label={label.labelFullDetails} onclick={navigateToRecordViewPage}></lightning-button>
-              </div>
+              <lightning-button slot='actions' label={label.labelFullDetails} onclick={navigateToRecordViewPage}></lightning-button>
               <lightning-record-view-form record-id={boatId}
-                                          object-api-name={boatObjectApiName}
+                                          object-api-name='Boat__c'
                                           density='compact'>
                   <lightning-output-field field-name={typeField}></lightning-output-field>
                   <lightning-output-field field-name={lengthField}></lightning-output-field>
